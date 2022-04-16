@@ -1,18 +1,16 @@
 <template>
-  <el-table :data="list" style="width: 100%;padding-top: 15px;">
-    <el-table-column label="Order_No" min-width="200">
+  <el-table :data="list" style="width: 100%; padding-top: 15px">
+    <el-table-column label="传感器ID" min-width="200">
       <template slot-scope="scope">
         {{ scope.row.order_no | orderNoFilter }}
       </template>
     </el-table-column>
-    <el-table-column label="Price" width="195" align="center">
-      <template slot-scope="scope">
-        ¥{{ scope.row.price | toThousandFilter }}
-      </template>
+    <el-table-column label="传感器值" width="195" align="center">
+      <template slot-scope="scope"> {{ scope.row.value }} </template>
     </el-table-column>
-    <el-table-column label="Status" width="100" align="center">
-      <template slot-scope="{row}">
-        <el-tag :type="row.status | statusFilter">
+    <el-table-column label="传感器状态" width="100" align="center">
+      <template slot-scope="{ row }">
+        <el-tag :type="row.status === '正常' ? 'success' : 'danger'">
           {{ row.status }}
         </el-tag>
       </template>
@@ -21,7 +19,7 @@
 </template>
 
 <script>
-import { transactionList } from '@/api/remote-search'
+import { sensorList } from '@/api/sensor'
 
 export default {
   filters: {
@@ -46,7 +44,8 @@ export default {
   },
   methods: {
     fetchData() {
-      transactionList().then(response => {
+      sensorList().then((response) => {
+        console.log('test')
         this.list = response.data.items.slice(0, 8)
       })
     }

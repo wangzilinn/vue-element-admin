@@ -5,12 +5,17 @@ const user = require('./user')
 const role = require('./role')
 const article = require('./article')
 const search = require('./remote-search')
+const sensor = require('./sensor')
+const log = require('./log')
 
+// 如果新建了mock文件，则必须要在这里添加
 const mocks = [
   ...user,
   ...role,
   ...article,
-  ...search
+  ...search,
+  ...sensor,
+  ...log
 ]
 
 // for front mock
