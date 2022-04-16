@@ -4,6 +4,7 @@
 
     <el-row style="background: #fff; padding: 16px 16px 0; margin-bottom: 32px">
       <line-chart :chart-data="lineChartData" />
+      <div>{{ cnt }}</div>
     </el-row>
 
     <el-row :gutter="32">
@@ -53,10 +54,9 @@
             />
           </div>
           <div style="text-align: center">
-            <el-button
-              type="primary"
-              @click="onSelectedModel"
-            >开始检测</el-button>
+            <el-button type="primary" @click="onSelectedModel"
+              >开始检测</el-button
+            >
           </div>
         </el-card>
       </el-col>
@@ -75,13 +75,14 @@
 }
 </style>
 <script>
-import LineChart from './../components/LineChart'
-import PanelGroup from './../components/PanelGroup'
+import LineChart from "./../components/LineChart";
+import PanelGroup from "./../components/PanelGroup";
+import { Cnt } from "@/api/detection";
 export default {
   setup() {},
   components: {
     LineChart,
-    PanelGroup
+    PanelGroup,
   },
   data() {
     return {
@@ -95,7 +96,7 @@ export default {
           0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
           0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
           0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
-          0.2, 0.2
+          0.2, 0.2,
         ],
         actualData: [
           0.053369542, 0.050941017, 0.063683461, 0.076409248, 0.059486041,
@@ -117,33 +118,37 @@ export default {
           0.068588375, 0.051638695, 0.051479626, 0.062650491, 0.065967602,
           0.065961096, 0.055428882, 0.072063718, 0.051999394, 0.051465073,
           0.056322302, 0.066126728, 0.063921633, 0.059361981, 0.069040408,
-          0.055814227, 0.051441994, 0.053980066, 0.067164967, 0.063287334
-        ]
+          0.055814227, 0.051441994, 0.053980066, 0.067164967, 0.063287334,
+        ],
       },
       form: {
-        name: '',
-        group: '',
-        date1: '',
-        date2: '',
+        name: "",
+        group: "",
+        date1: "",
+        date2: "",
         delivery: false,
         type: [],
-        resource: '',
-        desc: ''
+        resource: "",
+        desc: "",
       },
       model_list: [
-        { key: '1', label: '机械臂传感器组模型1' },
-        { key: '2', label: '机械臂传感器组模型使用loss' },
-        { key: '3', label: '传送带传感器模型1' }
+        { key: "1", label: "机械臂传感器组模型1" },
+        { key: "2", label: "机械臂传感器组模型使用loss" },
+        { key: "3", label: "传送带传感器模型1" },
       ],
-      selected_model: []
-    }
+      selected_model: [],
+      cnt: 0,
+    };
   },
   methods: {
     onSubmit() {
-      console.log('submit!')
-    }
-  }
-}
+      console.log("submit!");
+      this.cnt = Cnt().then((res) => {
+        this.cnt = res;
+      });
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 .dashboard-editor-container {
